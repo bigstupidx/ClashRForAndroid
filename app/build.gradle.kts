@@ -73,9 +73,9 @@ android {
         signingConfigs {
             maybeCreate("release").apply {
                 storeFile = rootProject.file(Objects.requireNonNull(properties.getProperty("storeFile")))
-                storePassword = System.getenv("KEYSTORE_PWD")
+                storePassword = properties.getProperty("keyPassword")
                 keyAlias = Objects.requireNonNull(properties.getProperty("keyAlias"))
-                keyPassword = System.getenv("KEY_PWD")
+                keyPassword = properties.getProperty("keyPassword")
             }
         }
         buildTypes {
@@ -101,6 +101,7 @@ dependencies {
     implementation("moe.shizuku.preference:preference-simplemenu-appcompat:$gShizukuPreferenceVersion")
     implementation("com.microsoft.appcenter:appcenter-analytics:$gAppCenterVersion")
     implementation("com.microsoft.appcenter:appcenter-crashes:$gAppCenterVersion")
+    implementation("androidx.appcompat:appcompat:1.3.0-alpha02")
 }
 
 task("injectAppCenterKey") {
