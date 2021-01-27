@@ -136,34 +136,34 @@ fun String.exec(pwd: File = buildDir, env: Map<String, String> = System.getenv()
 }
 
 task("compileClashCore") {
-    onlyIf {
-        val sourceModified = golangSource.walk()
-            .filter {
-                when ( it.extension ) {
-                    "c", "cpp", "h", "go", "mod" -> true
-                    else -> false
-                }
-            }
-            .map { it.lastModified() }
-            .max() ?: Long.MAX_VALUE
-        val targetModified = golangOutput.walk()
-            .filter { it.extension == "so" }
-            .map { it.lastModified() }
-            .min() ?: Long.MIN_VALUE
-
-        sourceModified > targetModified
-    }
-
-    doLast {
-        nativeAbis.parallelStream().forEach {
-            val env = generateGolangBuildEnvironment(it)
-            val out = golangOutput.resolve(it).apply {
-                mkdirs()
-            }.resolve("libclash.so")
-
-            "go build --buildmode=c-shared -trimpath -o \"$out\"".exec(pwd = golangSource, env = env)
-        }
-    }
+//    onlyIf {
+//        val sourceModified = golangSource.walk()
+//            .filter {
+//                when ( it.extension ) {
+//                    "c", "cpp", "h", "go", "mod" -> true
+//                    else -> false
+//                }
+//            }
+//            .map { it.lastModified() }
+//            .max() ?: Long.MAX_VALUE
+//        val targetModified = golangOutput.walk()
+//            .filter { it.extension == "so" }
+//            .map { it.lastModified() }
+//            .min() ?: Long.MIN_VALUE
+//
+//        sourceModified > targetModified
+//    }
+//
+//    doLast {
+//        nativeAbis.parallelStream().forEach {
+//            val env = generateGolangBuildEnvironment(it)
+//            val out = golangOutput.resolve(it).apply {
+//                mkdirs()
+//            }.resolve("libclash.so")
+//
+//            "go build --buildmode=c-shared -trimpath -o \"$out\"".exec(pwd = golangSource, env = env)
+//        }
+//    }
 }
 
 task("downloadGeoipDatabase") {

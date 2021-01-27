@@ -41,12 +41,12 @@ android {
 
         consumerProguardFiles("consumer-rules.pro")
 
-        externalNativeBuild {
-            cmake {
-                abiFilters(*nativeAbis.toTypedArray())
-                arguments("-DCLASH_OUTPUT=$golangOutput", "-DCLASH_SOURCE=$golangSource")
-            }
-        }
+//        externalNativeBuild {
+//            cmake {
+//                abiFilters(*nativeAbis.toTypedArray())
+//                arguments("-DCLASH_OUTPUT=$golangOutput", "-DCLASH_SOURCE=$golangSource")
+//            }
+//        }
     }
 
     buildTypes {
@@ -59,7 +59,7 @@ android {
     sourceSets {
         named("main") {
             assets.srcDir(geoipOutput)
-            jniLibs.srcDir(golangOutput)
+//            jniLibs.srcDir(golangOutput)
         }
     }
 
@@ -72,11 +72,11 @@ android {
         jvmTarget = "1.8"
     }
 
-    externalNativeBuild {
-        cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
-        }
-    }
+//    externalNativeBuild {
+//        cmake {
+//            path = file("src/main/cpp/CMakeLists.txt")
+//        }
+//    }
 }
 
 dependencies {
@@ -91,11 +91,11 @@ repositories {
     mavenCentral()
 }
 
-afterEvaluate {
-    android.buildTypes.forEach {
-        val cName = it.name.toCamelCase()
-
-        tasks["externalNativeBuild${cName}"].dependsOn(tasks["compileClashCore"])
-        tasks["package${cName}Assets"].dependsOn(tasks["downloadGeoipDatabase"])
-    }
-}
+//afterEvaluate {
+//    android.buildTypes.forEach {
+//        val cName = it.name.toCamelCase()
+//
+//        tasks["externalNativeBuild${cName}"].dependsOn(tasks["compileClashCore"])
+//        tasks["package${cName}Assets"].dependsOn(tasks["downloadGeoipDatabase"])
+//    }
+//}
